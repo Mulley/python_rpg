@@ -1,8 +1,10 @@
 from game_controller.game_controller import character_create
 from game_controller.battle import battle
+from game_controller.message_writer import start_message_pick_path
 from items.base_items import Potion
 from characters.base_classes import Mage
 from characters.enemy import Slime
+from constants.constants import *
 
 
 def main():
@@ -12,16 +14,9 @@ def main():
     player.inventory.append(potion)
     friend = Mage("Dude")
 
-    print("You are {}, the {}".format(player.name, player.class_type))
+    direction = start_message_pick_path(player)
     print()
-    print(
-        "As you travel throught the forest you encounter a fork in the road.")
-    print("Which way do you go?")
-    print("1. Left\n2. Right")
-    print()
-    direction = input("Pick a path: ")
-    print()
-    if direction == "1":
+    if direction == "Left":
         back = False
         while not back:
             slime = Slime()
@@ -36,21 +31,14 @@ def main():
                 print()
                 go_back = input("Go back? : ")
                 if go_back == "1":
-                    print((
-                        "As you head back you see another adventurer walking ",
-                        " away from the other path with boundless treasure,",
-                        " too bad you didn't go that way."
-                        ))
+                    print(GO_BACK_MESSAGE)
                     back = True
                 elif go_back == "2":
                     continue
             else:
                 break
-    elif direction == "2":
-        print((
-            "You discover boundless treasure and will never",
-            " have to work another day of you life!"
-            ))
+    elif direction == "Right":
+        print(RIGHT_PATH_MESSAGE)
     print("Game over.")
 
 if __name__ == '__main__':
